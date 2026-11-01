@@ -1,0 +1,14 @@
+exclude = [
+  "**/build/**",
+  "**/vendor/**",
+  "**/generated/**",
+  ".idea/**",
+  ".gradle/**",
+  "**/out/**",
+  "**/dist/**",
+  ".mise-cache/**",
+]
+
+[formatting]
+indent_string = "  "
+column_width = 90

@@ -1,0 +1,80 @@
+[tools]
+java = "temurin-21.0.9+10.0.LTS"
+node = "24.20.0"
+prettier = "3.9.6"
+"npm:markdownlint-cli" = "0.50.0"
+shfmt = "3.13.1"
+shellcheck = "0.11.0"
+taplo = "0.10.0"
+actionlint = "1.7.12"
+
+[tasks."format:docs"]
+run = "bash scripts/quality.sh prettier write"
+
+[tasks."format:shell"]
+run = "bash scripts/quality.sh shell write"
+
+[tasks."format:toml"]
+run = "bash scripts/quality.sh toml write"
+
+[tasks."format:kotlin"]
+run = "./gradlew ktlintFormat"
+
+[tasks.format]
+depends = ["format:docs", "format:shell", "format:toml", "format:kotlin"]
+
+[tasks."format:check:docs"]
+run = "bash scripts/quality.sh prettier check"
+
+[tasks."format:check:shell"]
+run = "bash scripts/quality.sh shell check"
+
+[tasks."format:check:toml"]
+run = "bash scripts/quality.sh toml check"
+
+[tasks."format:check:kotlin"]
+run = "./gradlew ktlintCheck"
+
+[tasks."format:check"]
+depends = [
+  "format:check:docs",
+  "format:check:shell",
+  "format:check:toml",
+  "format:check:kotlin",
+]
+
+[tasks."lint:markdown"]
+run = "bash scripts/quality.sh markdown check"
+
+[tasks."lint:shell"]
+run = "bash scripts/quality.sh shellcheck check"
+
+[tasks."lint:workflows"]
+run = "bash scripts/quality.sh workflows check"
+
+[tasks."lint:kotlin"]
+run = "./gradlew detekt"
+
+[tasks."lint:android"]
+run = "./gradlew :androidApp:lintDebug"
+
+[tasks.lint]
+run = [
+  "mise run lint:markdown",
+  "mise run lint:shell",
+  "mise run lint:workflows",
+  "./gradlew detekt :androidApp:lintDebug",
+]
+
+[tasks.test]
+run = "./gradlew :composeApp:desktopTest"
+
+[tasks.build]
+run = "./gradlew :androidApp:assembleDebug :composeApp:desktopJar"
+
+[tasks.check]
+# Sequence aggregate stages to avoid competing Gradle invocations in CI.
+run = ["mise run format:check", "mise run lint", "mise run test", "mise run build"]
+
+[tasks."run:desktop"]
+run = "./gradlew :composeApp:run"

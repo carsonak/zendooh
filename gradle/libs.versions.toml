@@ -1,0 +1,22 @@
+[versions]
+kotlin = "2.2.21"
+compose = "1.9.3"
+agp = "8.11.1"
+ktlint-plugin = "13.1.0"
+ktlint-engine = "1.7.1"
+detekt = "1.23.8"
+activity-compose = "1.11.0"
+
+[libraries]
+activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity-compose" }
+kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
+
+[plugins]
+kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+compose = { id = "org.jetbrains.compose", version.ref = "compose" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+android-application = { id = "com.android.application", version.ref = "agp" }
+android-kmp = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint-plugin" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }

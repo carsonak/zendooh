@@ -1,0 +1,14 @@
+.git/
+.idea/
+.agents/
+.codex/
+.aws/
+.gradle/
+.kotlin/
+**/build/
+**/node_modules/
+**/vendor/
+**/generated/
+**/out/
+**/dist/
+.mise-cache/

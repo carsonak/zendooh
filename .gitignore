@@ -1,0 +1,54 @@
+### IntelliJ IDEA ###
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+
+### Kotlin ###
+.kotlin
+
+### Eclipse ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+.vscode/
+
+### Mac OS ###
+.DS_Store
+
+### Build and local tooling ###
+.gradle/
+**/build/
+local.properties
+node_modules/
+.mise-cache/
+
+# Personal configuration and secrets
+.idea/
+*.iml
+.agents/
+.codex/
+.aws/
+.env
+.env.*
+!.env.example
+mise.local.toml
+*.jks
+*.keystore
+*.log
+*.tmp
