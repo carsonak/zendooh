@@ -1,7 +1,7 @@
 # Zendooh application roadmap
 
-**Agreed:** 2 November 2026. **Implementation status:** Phase 00 in progress; all gates
-remain open.
+**Agreed:** 2 November 2026. **Implementation status:** Phase 00 complete (G00 closed);
+phase 01 is ready to start. All later technical and human gates remain open.
 
 This bundle translates [ZENDOOH.md](../../ZENDOOH.md) into incremental, verifiable work.
 The specification describes product intent; these documents schedule its implementation.
@@ -35,12 +35,14 @@ build.
 
 The repository has KMP/Compose Android and desktop launchers and a placeholder title test.
 There is no implemented finance, persistence, parser or sync layer. The existing
-[tooling-foundation plan](../2026-11-02-tooling-foundation/plan.md) records incomplete
-verification; phase 00 must recheck and resolve it rather than assume it passed.
+[tooling-foundation plan](../2026-11-02-tooling-foundation/plan.md) now records passing
+verification. [Phase 00](00-foundation.md) records the toolchain evidence and the
+user-reported phone installation/launch that closed G00 on 2 November 2026.
 
-The current `mise run test` invokes desktop-hosted tests, and the build assembles Android
-and compiles desktop. These do not establish SMS permissions, encryption integration,
-background execution or device behavior. Update task coverage as modules/tests grow.
+The current `mise run test` invokes setup regression and desktop-hosted tests, and the
+build assembles Android and compiles desktop. These do not establish SMS permissions,
+encryption integration, background execution or device behavior. Update task coverage as
+modules/tests grow.
 
 Reference device: **Redmi 15C, Xiaomi HyperOS 3.0, Android 16, dual SIM**. Test
 installation, upgrades, receiving-SIM mapping, missing/ambiguous metadata, permission
@@ -61,7 +63,7 @@ limitations.
 
 | Phase                              | Deliverable                                              | Required entry gates                   | Exit gates                  | Status      |
 | ---------------------------------- | -------------------------------------------------------- | -------------------------------------- | --------------------------- | ----------- |
-| [00](00-foundation.md)             | Verified toolchain and Android delivery                  | Existing checkout                      | G00                         | In progress |
+| [00](00-foundation.md)             | Verified toolchain and Android delivery                  | Existing checkout                      | G00                         | Complete    |
 | [01](01-persistence.md)            | Encrypted persistence compatibility and shared contracts | G00                                    | G01                         | Not started |
 | [02](02-manual-ledger.md)          | Useful manual ledger and saved edits                     | G01                                    | G02; H01 phone acceptance   | Not started |
 | [03](03-protection-recovery.md)    | Protection, upgrades and portable replacement restore    | G02; H01 before H02                    | G03; H02 real-data approval | Not started |
@@ -210,8 +212,8 @@ links, all 14 phase contracts and gate identifiers. The audit also confirmed tha
 implementation checklist was prematurely marked complete. Commit/publication results are
 recorded in Git history and the delivery handoff, not as implementation gate evidence.
 
-Application builds/tests were not run for this documentation-only change. Phase 00 owns
-the unresolved foundation verification; G00 remains open.
+Application builds/tests were not run for the original planning-only change. Subsequent
+implementation evidence is recorded in phase 00; G00 is now closed.
 
 ## New additions
 

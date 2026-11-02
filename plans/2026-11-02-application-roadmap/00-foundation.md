@@ -1,6 +1,7 @@
 # Phase 00 — Verify the foundation and phone delivery path
 
-**Status:** In progress. G00 remains open pending verification and Android execution.
+**Status:** Complete. G00 closed on 2 November 2026 with toolchain evidence and
+user-reported physical-phone installation and launch.
 
 [Roadmap and execution contract](overview.md) · [Acceptance matrix](acceptance-matrix.md)
 
@@ -23,8 +24,9 @@ phase complete or use real data without the applicable technical and human gates
       through mise and repair configuration only where evidence requires it.
 - [x] Run formatting checks, lint, desktop-hosted tests and Android/desktop builds; record
       actual task coverage and close the old plan only with fresh evidence.
-- [ ] Establish emulator/instrumented test execution appropriate to this project, without
-      requiring a device for pure shared tests.
+- [x] Establish Android execution appropriate to this project through the documented
+      physical-device launch task; shared tests run independently of a device. Emulator
+      and instrumentation coverage remain explicitly separate (see decisions below).
 - [x] Prepare an APK, installation/update instructions and a signing-key custody procedure
       outside Git. Keep a consistent identity for test updates.
 - [x] Prepare a fictional-data device smoke-test checklist and record the reference device
@@ -45,13 +47,13 @@ persisted data.
 
 ## Acceptance and verification
 
-- [ ] G00: Pinned-tool checks pass: `mise run format:check`, `mise run lint`,
+- [x] G00: Pinned-tool checks pass: `mise run format:check`, `mise run lint`,
       `xvfb-run -a mise run test` where Linux needs a display, and `mise run build`.
-- [ ] The APK can be reproduced; the install/update procedure specifies application
+- [x] The APK can be reproduced; the install/update procedure specifies application
       identity and signing continuity.
-- [ ] Test documentation distinguishes common/desktop, Android integration and
+- [x] Test documentation distinguishes common/desktop, Android integration and
       physical-device coverage; unavailable checks are not marked passed.
-- [ ] Record an emulator launch or equivalent Android execution check. Prepare the
+- [x] Record an emulator launch or equivalent Android execution check. Prepare the
       physical-phone checklist for H01 rather than blocking independent foundation work on
       phone access.
 
@@ -67,8 +69,13 @@ access.
 
 ## Decisions to resolve during implementation
 
-Tool installation, Android test task shape and signing custody are implementation choices
-to document here. No signing material enters logs or plans.
+Use desktop-hosted shared tests for routine development and the physical phone for Android
+execution. The user confirmed setup, installation and launch on 2 November 2026.
+`mise run launch:android SERIAL` targets an explicitly selected device. A local emulator
+is optional and deferred given limited host memory; it is not a prerequisite for shared
+tests. There is no instrumented suite yet; add Android integration tests with the platform
+behavior they exercise. Signing continuity and custody are documented in the delivery
+guide. No signing material enters logs or plans.
 
 Record the decision, rationale and validation before its dependent slice begins. Routine
 implementation choices belong to the implementing agent; material product-scope or privacy
@@ -81,7 +88,7 @@ changes require user agreement. Add durable architecture decisions where needed.
 - Prepared [Android delivery](../../docs/android-delivery.md): application identity,
   artifact location, debug signing continuity, private key custody, safe install/update,
   emulator execution procedure and reference-phone smoke checklist. APK assembly passed;
-  actual Android execution remains unverified.
+  the later user-reported Android launch closes the execution requirement.
 - Missing prerequisites: no emulator or Xvfb installed; the host has a graphical display,
   `mise run test` passed using the existing display (the desktop title smoke test).
   Unattended sudo is unavailable.
@@ -99,18 +106,27 @@ changes require user agreement. Add durable architecture decisions where needed.
 - No application feature code changed; all checks exercise the baseline placeholder.
 - Final `mise run format` passed across Kotlin, documentation, shell and TOML. An earlier
   cancelled formatting attempt is superseded by this complete run.
-- Android execution remains unavailable: no emulator installed or KVM device exposed. No
-  Android launch, device interaction, update continuity or supported-API behavior is
-  claimed. Follow the delivery guide when an execution target is available.
-- Gate result: G00 remains open solely for Android execution and delivery validation.
-  Phase 01 implementation remains gated; human actions are deferred until the user
-  returns.
-- Implementation commit: the local documentation/evidence commit containing this update.
-  No push is authorized or performed; identify the commit through Git history.
-- Handoff: baseline formatting, lint, desktop test and build are verified. Install/launch
-  the APK on an emulator or dedicated fictional-data phone, verify same-signer update
-  behavior, then close G00 before beginning phase 01. H01 still belongs to phase 02; this
-  placeholder launch is not the useful-ledger acceptance journey.
+- Closure recheck at `2cdbd52`: `mise run check` passed (format checks, full lint, 27
+  setup regression tests, desktop test task and Android/desktop builds). Gradle reused
+  up-to-date test/build results where applicable; this was not a clean rebuild.
+- 2026-11-02: the user reported successful setup, installation and application launch on
+  their phone. This satisfies the equivalent Android execution check using the reference
+  phone context above. The exact installed revision was not supplied; the current delivery
+  tooling revision is `2cdbd52`. This is user-reported execution, not an agent-observed
+  device test. No private device data was collected.
+- Same-signer updates, accessibility, rotation and wider supported-API behavior have not
+  been reported as tested. The phase requires an update procedure and signing continuity
+  guidance, which are present; runtime upgrade/data preservation needs tests as persisted
+  features arrive. The earlier handoff overextended the Phase 00 gate by demanding an
+  update demonstration before closure.
+- Gate result: G00 closed. Phase 01 may begin. H01 (useful ledger acceptance), H02
+  (real-data readiness) and H03 (beta acceptance) remain open in their owning phases.
+- Evidence commits: `df0e0ea` (delivery), `8cf6db2` (tooling), `5c0a49b` (roadmap),
+  `d76cbd3` (setup), `2cdbd52` (device launch). The user authorized publication with this
+  phase closure; publication outcome is recorded in the handoff and Git history.
+- Handoff: use shared tests while the phone is disconnected; schedule Android platform
+  checks when an execution target is available. Do not infer Android integration,
+  financial correctness or real-data readiness from the placeholder launch.
 
 ## New additions
 
