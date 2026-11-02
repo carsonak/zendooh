@@ -4,6 +4,10 @@ An offline-first personal finance project built with Kotlin Multiplatform and Co
 Multiplatform. Android and desktop currently share a placeholder screen; financial
 features are not implemented yet.
 
+See [the product specification](ZENDOOH.md) and the
+[phased implementation roadmap](plans/2026-11-02-application-roadmap/overview.md) for
+agreed beta scope, execution gates and acceptance criteria.
+
 ## Run locally
 
 Install [mise](https://mise.jdx.dev/getting-started.html), then run:

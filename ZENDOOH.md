@@ -15,10 +15,11 @@ whether a feature has shipped.
 
 The intended foundation is Kotlin Multiplatform with shared Compose UI, an Android-first
 prototype, local financial processing, adaptive parsing, and selective encrypted device
-synchronisation. Backups and synchronisation belong to the intended product, but need not
-be complete before the prototype. Library candidates, example figures, and provisional
-performance targets require validation before becoming implementation or release
-requirements.
+synchronisation. Backups and synchronisation belong to the intended product. Early
+fictional-data prototypes may precede them, but portable recovery is required before
+real-data trials; wireless sync follows the agreed beta. Library candidates, example
+figures, and provisional performance targets require validation before becoming
+implementation or release requirements.
 
 ## Contents
 
@@ -247,9 +248,10 @@ validation and deduplication.
   references/minimal metadata consistent with retention rules. Reparsing must not
   duplicate events or silently overwrite user corrections.
 - Start with M-Pesa coverage and representative fixtures; expand to Airtel Money, banks,
-  M-Shwari, Pochi, savings, and loan formats. Exact launch coverage is open. Use adaptive
-  patterns to support new formats rather than relying on a handwritten parser for every
-  provider.
+  M-Shwari, Pochi, savings, and loan formats. The agreed beta covers M-Pesa, Airtel Money,
+  Fuliza and M-Shwari; enumerate supported message families and review-only limitations
+  during implementation. Other providers follow. Use adaptive patterns to support new
+  formats rather than relying on a handwritten parser for every provider.
 
 Permission denial must leave manual/import workflows usable. Prototype OS permissions and
 later store approval are separate concerns; successful sideloading does not establish
@@ -382,11 +384,27 @@ Restricted representations need stable identities so later permission expansion 
 them to the full event without duplicating expenses. Enforce authorization before
 transmission, including metadata and links that could reveal private information.
 
-Mark restricted replicas as partial. Personally funded business spending needs explicit
-owner-contribution/reimbursement semantics; the exact policy remains open. One encrypted
-SQLite file does not itself isolate profiles cryptographically from a reader with its key.
-Restrict transmitted data and evaluate profile-scoped keys/containers where stronger
-isolation is required.
+Mark restricted replicas as partial. Beta supports personal/business allocations and links
+between expenses and repayments, but dedicated reimbursement balances and formal
+owner-contribution accounting are deferred. Do not report an amount owed or owner equity
+merely from a descriptive link; those later capabilities need explicit accounting
+policies. One encrypted SQLite file does not itself isolate profiles cryptographically
+from a reader with its key. Restrict transmitted data and evaluate profile-scoped
+keys/containers where stronger isolation is required.
+
+### Transaction relationships
+
+**Confirmed beta direction:** Separate actual movements, economic allocations and
+contextual relationships. Support typed links with tested financial semantics, such as
+refunds and transfers, alongside custom descriptive links/groups for investment, returns,
+losses, expenses and other user-defined purposes. Linked views should help users explore
+money flows without creating another movement or counting the same amount repeatedly.
+
+Custom labels do not silently change balances or establish realized gains/losses. Partial
+amounts, multiple links, cycles and later corrections need explicit validation and report
+behavior. New financial semantics require domain support even when text extraction or
+custom labeling is possible. A universal user-programmable accounting rule language is not
+a beta requirement.
 
 ## 8. Learning financial meaning
 
@@ -476,6 +494,25 @@ Support user-defined category/account/profile budget limits with progress and tr
 and opt-in reminders. Recurring commitments inferred from history remain predictions until
 confirmed. Reports should distinguish established totals from additional uncertain amounts
 so apparently precise charts do not hide incomplete interpretation.
+
+### Debt-cost forecasting
+
+**Confirmed beta direction:** Provide explainable Fuliza and M-Shwari debt-cost forecasts
+with explicit, versioned personal defaults, effective dates and assumptions. Keep
+predicted charges separate from observed transactions and balances; forecasts never create
+ledger postings. Missing or unsupported rates, fee structures or account history must
+produce a qualified/incomplete result rather than invented precision.
+
+Beta links to official provider terms and lets users enter, edit and save their defaults.
+Validate current official sources when implementing product-specific calculations; this
+specification establishes no current rates. Test exact arithmetic, rounding, date/charge
+boundaries, repayment assumptions and historical reproducibility with fictional rules.
+
+Hosted rule distribution is deferred until after multi-user beta feedback. Future checks
+and downloads are optional and user-initiated, possibly prompted when using forecasts;
+they must not silently overwrite personal defaults. Investment and Money Market Fund
+forecasting is desired future work requiring its own valuation, yield, fee/tax and data
+policies.
 
 ## 10. Editing history and merging
 
@@ -618,6 +655,14 @@ privacy-reviewed learned information. Process raw messages transiently by defaul
 permanently duplicate the SMS inbox. Re-read an authorized original when it exists. Any
 necessary temporary copy needs encryption, expiry, and deletion rules.
 
+**Confirmed beta retention:** A bounded encrypted teaching cache may retain selected raw
+messages for a concrete teaching/evaluation task until that task completes or seven days
+elapse, whichever comes first. Allow manual clearing and exclude the cache from backups
+and sync. Enforce expiry on access/startup even when background cleanup is delayed; do not
+renew retention indefinitely or retain original text disguised as learned features.
+Structured corrections and privacy-reviewed templates have separate retention rules.
+Document cleanup and key-lifecycle limits without promising physical flash erasure.
+
 Store parser version and extraction provenance. If the original disappears, retain the
 valid structured record but acknowledge that full reparsing may be impossible. Distinguish
 **delete source message**, **delete imported transaction and dependent derived data**, and
@@ -708,26 +753,50 @@ gates.
 Use deterministic fictional data for these journeys. Exercise multiple-hop replication,
 concurrent edits, scope expansion and state-machine/property-based tests where useful.
 
-### Incremental implementation order
+### Agreed beta and incremental delivery
 
-**Recommended implementation order:**
+**Confirmed beta scope:** An installable Android application, including development-mode
+installation when needed, with personal/business profiles, multiple accounts/SIMs, cash,
+M-Pesa, Airtel Money, Fuliza and M-Shwari. Include adaptive SMS learning/review,
+corrections, allocations/relationships, debt forecasts, categories, basic
+reports/comparisons, monthly budgets, confirmed recurring commitments, optional reminders,
+unusual-spending suggestions, encrypted storage, portable recovery and scheduled backups.
 
-1. Establish the Android-targeted KMP/Compose foundation, manual entry/sample imports,
-   SQLite persistence, and basic views.
-2. Build financial correctness, stable identities, provenance, allocations, saved
-   revisions, and the adaptive parser with privacy-safe fixtures.
-3. Add rules/similarity-based categorization, budgets, reconciliation, useful visual
-   insights, and independent Android ingestion adapters.
-4. Implement reversible merge/import, portable encrypted backups, and recovery validation.
-5. Add scoped device pairing, authorized projections, incremental/resumable nearby sync,
-   and automation summaries.
-6. Expand measured intelligence, iOS delivery, and explicitly deferred features when their
-   prerequisites are ready.
+Daily beta reports cover balances with coverage, income/spending/cash flow, category and
+merchant breakdowns, period comparisons, fee trends and linked transactions. Advanced
+visualizations, item/investment insights and natural-language queries remain later work.
+Use explicit currencies; initial journeys emphasize KES. Reporting starts with a
+configurable Africa/Nairobi workspace timezone while preserving instants and known source
+offsets.
 
-This is an ordering guide, not a fixed schedule. Keep the advanced requirements in the
-foundations without making every future capability a prototype dependency. Agents may
-choose schemas, interfaces, project structure, and libraries suited to the actual codebase
-while preserving the adopted product behavior and architectural boundaries.
+**Confirmed delivery gates:** Use fictional data first. Require user acceptance of the
+first useful phone journey, then protection/upgrade/portable-recovery evidence and
+explicit approval before real-data trials. New workflows must pass their own
+technical/privacy checks before using real data. Beta acceptance is a later human
+milestone; routine technically independent work need not wait for approval after every
+slice.
+
+The [phased application roadmap](plans/2026-11-02-application-roadmap/overview.md) owns
+execution details, prerequisites, evidence and learning/change logs. Its sequence is:
+
+1. Verify tooling and phone delivery; validate persistence/encryption and shared
+   boundaries.
+2. Deliver a fictional-data manual ledger and saved revisions, then portable replacement
+   recovery and real-data protection gates.
+3. Add profiles, allocations, relationships, controlled/SMS acquisition and adaptive
+   learning.
+4. Complete beta provider semantics, debt forecasts, categorization, reports and budgets.
+5. Add recurring commitments, quiet automation and scheduled backups; harden and accept
+   beta.
+6. Implement portable merging/conflicts/undo, then authorized subsets and wireless sync.
+7. Expand investment forecasting, hosted rule updates, iOS and other deferred capabilities
+   after their prerequisites and dedicated decisions.
+
+These are behavioral gates, not mandatory schemas, class hierarchies or library choices.
+Agents may improve implementation approaches while preserving accepted behavior and
+recording material decisions. Use small coherent local commits and keep implementation
+commits unpushed until explicitly approved. Group necessary human actions at phase entry
+or exit after completing available independent work.
 
 **Accepted development guidance:** Deliver small end-to-end slices with deterministic
 fixtures, migrations, and executable acceptance checks. Record material schema, protocol,
@@ -754,15 +823,18 @@ and distinguish designed from shipped features.
 
 The following choices remain open:
 
-- **Release boundary:** The exact first public version, provider coverage, minimum OS
-  targets, and timing of production sync/iOS are unspecified.
+- **Release boundary:** The Android beta scope and post-beta sync ordering are agreed
+  above. The exact public release, wider provider coverage, validated OS/device support
+  and iOS timing remain unspecified; the current build minimum is not proof of
+  compatibility.
 - **Acquisition/distribution:** Prototype message ingestion can be tested separately from
   store release; production permissions, distribution requirements, and platform-specific
   acquisition need validation. Do not assume approval or unrestricted historical SMS
   access.
 - **Detailed financial model:** Final tables/interfaces, full double-entry versus balanced
-  postings, owner contributions/reimbursements, currency conversion/valuation, negative
-  balances, and detailed reconciliation rules require specification and tests.
+  postings, currency conversion/valuation, negative balances, and detailed reconciliation
+  rules require specification and tests. Dedicated reimbursement/owner-contribution
+  accounting is deferred; beta allocations and descriptive links must not imply it exists.
 - **Learning policy:** Pattern representation, calibration, critical-field acceptance,
   review sampling, promotion/rollback rules, safe reprocessing, and personalized
   parser-knowledge sync remain open. No particular ML framework/model or natural-language
@@ -774,10 +846,12 @@ The following choices remain open:
   granularity, remain open.
 - **Deletion semantics:** Whether source deletion should trigger transaction deletion, and
   how forgetting learned information interacts with authorized replicas/backups, are not
-  fully specified.
+  fully specified for the broader product. Beta does not automatically delete transactions
+  when source messages disappear, and its teaching-cache lifetime is bounded as above.
 - **Future data and business models:** Receipt/item normalization, asset attribution,
-  community governance/privacy, pricing, licensing, and parent-company branding remain
-  open.
+  community governance/privacy, pricing, and parent-company branding remain open. The
+  repository currently uses Apache 2.0; future business/content licensing choices must not
+  be confused with an unchosen repository license.
 
 ### Developer learning guidance
 
