@@ -33,7 +33,8 @@ mise exec -- ./gradlew :androidApp:installDebug
 
 Open Zendooh from the device launcher. The initial compile/target SDK is 36. `composeApp`
 owns shared Compose UI and the desktop launcher; `androidApp` owns the Android launcher.
-iOS is not configured.
+iOS is not configured. See [Android delivery](docs/android-delivery.md) for signing-key
+custody, safe updates, emulator execution and the fictional-data phone checklist.
 
 ## Checks and tests
 
