@@ -10,7 +10,7 @@ testing, and build tasks shared with CI. No financial features or release publis
 - [x] Inspect repository, preserve existing work, and confirm target/tooling choices.
 - [x] Add build foundation and quality-tool configuration.
 - [x] Add CI and setup documentation.
-- [ ] Format, validate failure detection, test, and build where prerequisites permit.
+- [x] Format, validate failure detection, test, and build where prerequisites permit.
 
 ## Decisions and evolution
 
@@ -40,3 +40,13 @@ repair and CI verification must be checked before declaring the foundation fully
 README is a short placeholder; CONTRIBUTING contains setup, running, checks, and
 conventions. Personal IDE files are excluded from Git. Obsolete reference documents were
 removed.
+
+## Fresh verification on 2 November 2026
+
+Roadmap phase 00 rechecked baseline `b2fac6a`: `mise run format:check`, `mise run lint`,
+`mise run test` and `mise run build` all passed. Tests used the existing graphical
+display. Android lint, shared/launcher compilation, debug APK assembly and desktop JAR
+compilation now succeed. Earlier incomplete SDK evidence above is retained as history. No
+tool upgrade or application source change was required. This closes the old tooling
+verification work; Android runtime/device delivery remains an open gate in the application
+roadmap.
