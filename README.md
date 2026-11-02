@@ -16,3 +16,7 @@ mise run run:desktop
 
 Android SDK configuration is required by the build. See [CONTRIBUTING.md](CONTRIBUTING.md)
 for environment setup, Android execution, tests, and quality checks.
+
+## License
+
+Licensed under the [Apache License, Version 2.0](LICENSE).
