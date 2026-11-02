@@ -1,6 +1,7 @@
 # Zendooh application roadmap
 
-**Agreed:** 2 November 2026. **Implementation status:** Not started.
+**Agreed:** 2 November 2026. **Implementation status:** Phase 00 in progress; all gates
+remain open.
 
 This bundle translates [ZENDOOH.md](../../ZENDOOH.md) into incremental, verifiable work.
 The specification describes product intent; these documents schedule its implementation.
@@ -60,7 +61,7 @@ limitations.
 
 | Phase                              | Deliverable                                              | Required entry gates                   | Exit gates                  | Status      |
 | ---------------------------------- | -------------------------------------------------------- | -------------------------------------- | --------------------------- | ----------- |
-| [00](00-foundation.md)             | Verified toolchain and Android delivery                  | Existing checkout                      | G00                         | Not started |
+| [00](00-foundation.md)             | Verified toolchain and Android delivery                  | Existing checkout                      | G00                         | In progress |
 | [01](01-persistence.md)            | Encrypted persistence compatibility and shared contracts | G00                                    | G01                         | Not started |
 | [02](02-manual-ledger.md)          | Useful manual ledger and saved edits                     | G01                                    | G02; H01 phone acceptance   | Not started |
 | [03](03-protection-recovery.md)    | Protection, upgrades and portable replacement restore    | G02; H01 before H02                    | G03; H02 real-data approval | Not started |

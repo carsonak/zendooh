@@ -1,6 +1,6 @@
 # Phase 00 — Verify the foundation and phone delivery path
 
-**Status:** Not started. No implementation gate is closed by creating this document.
+**Status:** In progress. G00 remains open pending verification and Android execution.
 
 [Roadmap and execution contract](overview.md) · [Acceptance matrix](acceptance-matrix.md)
 
@@ -19,15 +19,15 @@ phase complete or use real data without the applicable technical and human gates
 
 ## Implementation slices
 
-- [ ] Recheck the existing tooling-foundation blockers; install pinned prerequisites
+- [x] Recheck the existing tooling-foundation blockers; install pinned prerequisites
       through mise and repair configuration only where evidence requires it.
-- [ ] Run formatting checks, lint, desktop-hosted tests and Android/desktop builds; record
+- [x] Run formatting checks, lint, desktop-hosted tests and Android/desktop builds; record
       actual task coverage and close the old plan only with fresh evidence.
 - [ ] Establish emulator/instrumented test execution appropriate to this project, without
       requiring a device for pure shared tests.
-- [ ] Prepare an APK, installation/update instructions and a signing-key custody procedure
+- [x] Prepare an APK, installation/update instructions and a signing-key custody procedure
       outside Git. Keep a consistent identity for test updates.
-- [ ] Prepare a fictional-data device smoke-test checklist and record the reference device
+- [x] Prepare a fictional-data device smoke-test checklist and record the reference device
       capabilities.
 
 Deliver each coherent slice with focused tests, a runnable demonstration where applicable,
@@ -76,10 +76,41 @@ changes require user agreement. Add durable architecture decisions where needed.
 
 ## Completion evidence and local commits
 
-- Checks and demonstrations: not run; this is an implementation plan.
-- Gate result and limitations: pending.
-- Implementation commits: none. Keep commits local until explicit push approval.
-- Handoff: record what the next phase may rely on and any remaining independent work.
+- 2026-11-02, baseline `b2fac6a`: `mise run format:check` passed, including Kotlin, shell,
+  TOML and documentation checks.
+- Prepared [Android delivery](../../docs/android-delivery.md): application identity,
+  artifact location, debug signing continuity, private key custody, safe install/update,
+  emulator execution procedure and reference-phone smoke checklist. APK assembly passed;
+  actual Android execution remains unverified.
+- Missing prerequisites: no emulator or Xvfb installed; the host has a graphical display,
+  `mise run test` passed using the existing display (the desktop title smoke test).
+  Unattended sudo is unavailable.
+- `mise run lint` passed: Markdown, shell, workflows, detekt and Android debug lint.
+  Shared Android UI and launcher compilation completed as dependencies.
+- Scoped Markdown lint passed for the delivery guide and updated documents.
+- Earlier build/test attempts cancelled during resource contention are not passes; the
+  sequential desktop test and build reruns passed. The host has limited RAM and exhausted
+  swap under overlapping builds; avoid concurrent Gradle invocations.
+- `mise run build` passed: Android debug APK assembly and desktop JAR compilation.
+  Artifact: `androidApp/build/outputs/apk/debug/androidApp-debug.apk` (untracked build
+  output). Build emitted a native-library stripping warning and retained that library.
+- SDK `apksigner verify` passed for the generated APK. `adb devices` returned no attached
+  targets; no signing key material was read or committed.
+- No application feature code changed; all checks exercise the baseline placeholder.
+- Final `mise run format` passed across Kotlin, documentation, shell and TOML. An earlier
+  cancelled formatting attempt is superseded by this complete run.
+- Android execution remains unavailable: no emulator installed or KVM device exposed. No
+  Android launch, device interaction, update continuity or supported-API behavior is
+  claimed. Follow the delivery guide when an execution target is available.
+- Gate result: G00 remains open solely for Android execution and delivery validation.
+  Phase 01 implementation remains gated; human actions are deferred until the user
+  returns.
+- Implementation commit: the local documentation/evidence commit containing this update.
+  No push is authorized or performed; identify the commit through Git history.
+- Handoff: baseline formatting, lint, desktop test and build are verified. Install/launch
+  the APK on an emulator or dedicated fictional-data phone, verify same-signer update
+  behavior, then close G00 before beginning phase 01. H01 still belongs to phase 02; this
+  placeholder launch is not the useful-ledger acceptance journey.
 
 ## New additions
 
