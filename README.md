@@ -10,16 +10,21 @@ agreed beta scope, execution gates and acceptance criteria.
 
 ## Run locally
 
-Install [mise](https://mise.jdx.dev/getting-started.html), then run:
+Set up the command-line development environment in user space:
 
 ```sh
-mise trust
-mise install
-mise run run:desktop
+bash scripts/setup.sh
 ```
 
-Android SDK configuration is required by the build. See [CONTRIBUTING.md](CONTRIBUTING.md)
-for environment setup, Android execution, tests, and quality checks.
+Setup installs mise if missing, the pinned JDK and quality tools, Android command-line SDK
+tools, and wrapper-managed Gradle. It requires host prerequisites and prompts for Android
+licenses. No Android Studio or emulator is installed. See
+[CONTRIBUTING.md](CONTRIBUTING.md) for prerequisites, shell activation, SDK conflict
+recovery, Android execution, tests, and quality checks. After activating mise, run:
+
+```sh
+mise run run:desktop
+```
 
 ## License
 

@@ -13,20 +13,25 @@ concurrency:
 
 jobs:
   check:
-    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, macos-15, macos-15-intel]
+    runs-on: ${{ matrix.os }}
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
-      - uses: jdx/mise-action@5228313ee0372e111a38da051671ca30fc5a96db # v3
-        with:
-          version: 2026.10.18
-      - uses: android-actions/setup-android@9fc6c4e9069bf8d3d10b2204b1fb8f6ef7065407 # v3
-        with:
-          packages: platform-tools
-          cmdline-tools-version: 13114758
-          log-accepted-android-sdk-licenses: false
-      - name: Install Android SDK packages
-        run: sdkmanager "platforms;android-36" "build-tools;35.0.0" "build-tools;36.0.0"
+      - name: Set up user-space tools
+        shell: bash
+        run: |
+          # Hosted runners supply another SDK; exercise the project-managed SDK.
+          unset ANDROID_HOME ANDROID_SDK_ROOT
+          bash scripts/setup.sh --accept-licenses
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+      - name: Verify setup regressions
+        run: mise run test:setup
       - uses: gradle/actions/setup-gradle@da187c8e6ffbd3802e00f2477aa5a822b25f2dda # v4.4.4
-      - name: Verify
+        if: runner.os == 'Linux'
+      - name: Verify project
+        if: runner.os == 'Linux'
         run: xvfb-run -a mise run check

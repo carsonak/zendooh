@@ -52,3 +52,7 @@ mise.local.toml
 *.keystore
 *.log
 *.tmp
+
+# Local SDK configuration recovery
+/local.properties.backup-*
+/.setup-properties-*

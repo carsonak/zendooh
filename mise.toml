@@ -1,4 +1,20 @@
+min_version = "2026.10.18"
+
+[plugins]
+"vfox:android-sdk" = "https://github.com/jdx/vfox-android-sdk.git#2e4abbe0db0c862d518f7eacb120cb5db597dbfa"
+
+[vars]
+android_build_tools = "36.0.0"
+
+[env]
+ZENDOOH_ANDROID_PACKAGES = "platform-tools platforms;android-36 build-tools;35.0.0 build-tools;{{ vars.android_build_tools }}"
+_.path = { path = [
+  "{{ tools['android-sdk'].path }}/platform-tools",
+  "{{ tools['android-sdk'].path }}/build-tools/{{ vars.android_build_tools }}",
+], tools = true }
+
 [tools]
+"vfox:android-sdk" = { version = "19.0", build_tools = false }
 java = "temurin-21.0.9+10.0.LTS"
 node = "24.20.0"
 prettier = "3.9.6"
@@ -67,7 +83,7 @@ run = [
 ]
 
 [tasks.test]
-run = "./gradlew :composeApp:desktopTest"
+run = ["python3 -B scripts/test_setup.py", "./gradlew :composeApp:desktopTest"]
 
 [tasks.build]
 run = "./gradlew :androidApp:assembleDebug :composeApp:desktopJar"
@@ -78,3 +94,11 @@ run = ["mise run format:check", "mise run lint", "mise run test", "mise run buil
 
 [tasks."run:desktop"]
 run = "./gradlew :composeApp:run"
+
+[tasks.setup]
+description = "Install the user-space development environment"
+run = "bash scripts/setup.sh"
+
+[tasks."test:setup"]
+description = "Run isolated development setup regression tests"
+run = "python3 -B scripts/test_setup.py"
