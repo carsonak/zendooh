@@ -2,10 +2,13 @@
 
 ## Project and responsibilities
 
-Zendooh is a solo, AI-assisted Kotlin Multiplatform and Compose Multiplatform project for
-personal financial management. Prioritize useful, verifiable end-to-end changes,
-maintainable shared foundations, and careful handling of financial data.
+Zendooh is a Kotlin Multiplatform and Compose Multiplatform project for personal financial
+management. Prioritize useful, verifiable end-to-end changes, maintainable shared
+foundations, and careful handling of financial data.
 
+- Keep `AGENTS.md` focused on durable repository-wide instructions and conventions. Record
+  temporary findings, project progress, and current implementation details in tracked
+  plans or appropriate project documentation instead.
 - Own implementation, debugging, relevant verification, and documentation for the
   requested task.
 - Inspect the current code, build configuration, tests, and relevant documentation before
@@ -24,12 +27,16 @@ maintainable shared foundations, and careful handling of financial data.
 - Work in the current repository checkout by default. Worktrees are optional isolation
   tools, not a prerequisite or contributor requirement.
 - Before editing, inspect working-tree status and the current branch, HEAD, and upstream
-  where available. A new repository may not yet have a commit or upstream.
+  where available.
 - Preserve existing staged, unstaged, and untracked work. Never overwrite, reset, stash,
   delete, or move unrelated changes without explicit authorization.
 - Keep edits and Git operations scoped to the task. Do not create branches, commits,
   pushes, or pull requests merely to satisfy a workflow convention; follow the user's
   requested delivery workflow.
+- Use Conventional Commits with `type(scope): description`; the scope is optional. Group
+  changes into small, coherent commits, each covering an independently explainable change.
+  Write messages that document what changed and why so feature additions and changes
+  remain traceable in Git history.
 - Do not force-push, rewrite shared history, remove branches or worktrees, or perform
   destructive cleanup without explicit authorization.
 - Refresh remote state when an operation depends on it. Do not assume branch names,
@@ -83,19 +90,21 @@ file.
 
 Use mise to install pinned tools and run the repository's quality tasks. Gradle owns
 Kotlin builds and analysis; use the wrapper rather than a system Gradle installation.
-Inspect task definitions and CI before assuming an aggregate covers a particular target.
+Inspect task definitions, CI, and `CONTRIBUTING.md` for current task behavior and target
+coverage before choosing verification commands.
 
 - Run `mise run format` to format implementation changes and review the diff. For reviews,
   use `mise run format:check`, which does not rewrite files.
-- Run `mise run lint` for Markdown, shell, workflow, detekt, and Android lint checks.
-  Kotlin formatting is checked by `format:check`; TOML uses Taplo and Markdown/JSON/YAML
-  use Prettier. Authored shell scripts must use a `.sh` extension.
-- Run `mise run test` for desktop-hosted shared UI tests and `mise run build` for Android
-  debug assembly and desktop compilation. `mise run check` runs all these stages.
-- Use focused language tasks for narrow verification; see `mise tasks` and the README.
-  Linux UI tests require a display, such as `xvfb-run -a mise run test`.
+- Run `mise run lint` for lint checks, `mise run test` for tests, and `mise run build` for
+  builds. Use `mise run check` for aggregate verification after inspecting its coverage.
+- Use the configured tools: ktlint and detekt for Kotlin, Android lint, Prettier and
+  markdownlint for Markdown, Prettier for JSON/YAML, Taplo for TOML, shfmt and ShellCheck
+  for shell, and actionlint for workflows. Authored shell scripts must use a `.sh`
+  extension.
+- Use focused language tasks for narrow verification; discover them with `mise tasks`.
 - Keep tool versions pinned in mise, the Gradle wrapper, and the version catalog. Do not
-  upgrade tools incidentally or claim unavailable checks ran.
+  duplicate specific version numbers in documentation; let the relevant configuration
+  files own them. Do not upgrade tools incidentally or claim unavailable checks ran.
 - Run the narrowest relevant tests first, then the configured checks and builds needed for
   the affected modules and targets. Run Android lint when configured and relevant. Inspect
   aggregate tasks rather than assuming `check` covers all platforms or device tests.
