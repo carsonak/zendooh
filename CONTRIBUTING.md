@@ -98,12 +98,15 @@ For Android, start an API 24 or newer emulator or connect a device, then run:
 
 ```sh
 mise exec -- ./gradlew :androidApp:installDebug
+mise run launch:android SERIAL
 ```
 
-Open Zendooh from the device launcher. The initial compile/target SDK is 36. `composeApp`
-owns shared Compose UI and the desktop launcher; `androidApp` owns the Android launcher.
-iOS is not configured. See [Android delivery](docs/android-delivery.md) for signing-key
-custody, safe updates, emulator execution and the fictional-data phone checklist.
+Replace `SERIAL` with the intended device serial from `adb devices`. The launch task opens
+the installed app; it does not build or install an APK. You can also open Zendooh from the
+device launcher. The initial compile/target SDK is 36. `composeApp` owns shared Compose UI
+and the desktop launcher; `androidApp` owns the Android launcher. iOS is not configured.
+See [Android delivery](docs/android-delivery.md) for signing-key custody, safe updates,
+emulator execution and the fictional-data phone checklist.
 
 ## Checks and tests
 

@@ -95,6 +95,10 @@ run = ["mise run format:check", "mise run lint", "mise run test", "mise run buil
 [tasks."run:desktop"]
 run = "./gradlew :composeApp:run"
 
+[tasks."launch:android"]
+description = "Launch the installed Android app on the specified device"
+run = "bash scripts/launch-android.sh"
+
 [tasks.setup]
 description = "Install the user-space development environment"
 run = "bash scripts/setup.sh"

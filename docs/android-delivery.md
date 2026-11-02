@@ -29,13 +29,16 @@ mismatch when data must be preserved; stop and recover the original signer inste
 
 Enable developer options and USB debugging on the test phone, connect by USB, and approve
 the host on the phone. Use a dedicated emulator or a phone containing fictional test data.
-Install platform-tools so `adb` is on PATH. Select the exact device serial from
-`adb devices`, then run:
+Run the [development setup](../CONTRIBUTING.md#development-environment) to install
+platform-tools. Select the exact device serial from `mise exec -- adb devices`, then run:
 
 ```sh
-adb -s SERIAL install -r androidApp/build/outputs/apk/debug/androidApp-debug.apk
-adb -s SERIAL shell am start -W -n com.zendooh.app/com.zendooh.MainActivity
+mise exec -- adb -s SERIAL install -r androidApp/build/outputs/apk/debug/androidApp-debug.apk
+mise run launch:android SERIAL
 ```
+
+The launch task opens the installed app and waits for activity launch completion. It does
+not build or install an APK.
 
 Replace `SERIAL` with the intended device. `-r` preserves app data for a compatible signed
 update. A failed install must be investigated; uninstalling clears application data. Do
